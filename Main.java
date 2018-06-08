@@ -7,31 +7,31 @@ public class Main {
 	
 	
 	
-	// ** Transpose **																			// ** Adds a reversed edge towards the nodes predecessor **
+	// ** Transpose **												// ** Adds a reversed edge towards the nodes predecessor **
 	public static void transpose (ArrayList<Node> adjList, Node prevNode){
 		int size = adjList.size();
-		for (int i = 0; i < size; i++){															// ** Iterate through currently adjacent nodes **
+		for (int i = 0; i < size; i++){										// ** Iterate through currently adjacent nodes **
 			Node node = adjList.get(i);
-			if (!node.transposed.contains(prevNode)){											// ** If an edge hasn't already been created add one pointing backwards **
+			if (!node.transposed.contains(prevNode)){							// ** If an edge hasn't already been created add one pointing backwards **
 				node.transposed.add(prevNode);
 			}
-			transpose(node.adjNodes, node);														// ** Recursively call transpose on all adjacent nodes from our current node
-		}																						//    before continuing on to our next adjacent node **
+			transpose(node.adjNodes, node);									// ** Recursively call transpose on all adjacent nodes from our current node
+		}													//    before continuing on to our next adjacent node **
 	}
 
 	
 	// ** Performs a depth first search and prints out nodes in the order seen **
 	public static void dfs (ArrayList <Node> adjList, ArrayList <Node> visited){
 		int size = adjList.size();
-		for (int i = 0; i < size; i++){															// ** Iterate through currently adjacent nodes **
+		for (int i = 0; i < size; i++){										// ** Iterate through currently adjacent nodes **
 			Node node = adjList.get(i);
-			if (visited.contains(node)){														// ** If node has been seen previously then skip it **
+			if (visited.contains(node)){									// ** If node has been seen previously then skip it **
 				continue;
 			} else {																			
-				System.out.println(node.value);													// ** Print out the nodes value **
-				visited.add(node);																// ** Mark the node as seen **
-				dfs(node.adjNodes, visited);													// ** Recursively call DFS on all adjacent nodes from our current node
-			}																					//    before continuing on to our next adjacent node **
+				System.out.println(node.value);								// ** Print out the nodes value **
+				visited.add(node);									// ** Mark the node as seen **
+				dfs(node.adjNodes, visited);								// ** Recursively call DFS on all adjacent nodes from our current node
+			}												//    before continuing on to our next adjacent node **
 		}
 	}
 	
@@ -43,22 +43,22 @@ public class Main {
 		ArrayList <Node> sortedList = new ArrayList<Node>();
 		int size = adjList.size();
 		
-		for (int i = 0; i < size; i++){																// ** Iterate through currently adjacent nodes **
+		for (int i = 0; i < size; i++){										// ** Iterate through currently adjacent nodes **
 			Node node = adjList.get(i);
 			
-			if (visited2.contains(node)){															// ** If node has been seen previously then skip it **
+			if (visited2.contains(node)){									// ** If node has been seen previously then skip it **
 				continue;
 			} else {
-				visited2.add(node);																	// ** Mark the node as seen **
-				ArrayList <Node> tempList = topoSort(node.adjNodes, visited2);						// ** Create a topologically sorted list for nodes adjacent to current node **
-				for (int j = tempList.size() - 1; j >= 0; j--){										// ** Add sorted list into stack in reverse order to preserve order ** 
+				visited2.add(node);									// ** Mark the node as seen **
+				ArrayList <Node> tempList = topoSort(node.adjNodes, visited2);				// ** Create a topologically sorted list for nodes adjacent to current node **
+				for (int j = tempList.size() - 1; j >= 0; j--){						// ** Add sorted list into stack in reverse order to preserve order ** 
 					tempStack.push(tempList.get(j));
 				}
 			}
-			tempStack.push(node);																	// ** Add current node to stack so it appears before its successors **
+			tempStack.push(node);										// ** Add current node to stack so it appears before its successors **
 		}
 		
-		while (!tempStack.isEmpty()){																// ** Organize into a list so it can be returned **
+		while (!tempStack.isEmpty()){										// ** Organize into a list so it can be returned **
 			Node currNode = tempStack.pop();
 			sortedList.add(currNode);
 		}
